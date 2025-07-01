@@ -1,0 +1,239 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(315deg, #a8480c, #04276c);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80px;
+}
+
+.background {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: right;
+    width: fit-content;
+    max-width: 80vw;  /* keep it responsive */
+    padding: 2rem 4rem;
+    position: relative;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    background-color: white;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 40px;
+    width: 100%;
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.right {
+    flex: 1;
+}
+
+img.main-photo {
+    width: 250px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: -6px 6px 10px rgba(0, 0, 0, 0.5);
+}
+
+.title {
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    
+} 
+.aboutme {
+    font-size: 25px;
+    line-height: 1.6;
+    color: #000;
+    display: flex;
+    text-align: left;
+}
+
+.tabs {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.tabs button {
+    position: relative;
+    transition: color 0.3s ease;
+    color: #000;
+    font-size: 30px;
+    border: none;
+    border-radius: 20px;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.tabs button::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background-color: black;
+    transition: width 0.3s ease;
+    border-radius: 2px;
+}
+
+.tabs button:hover::after,
+.tabs button.active::after {
+    width: 80%;
+}
+
+.about {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: #000000;
+    font-size: 30px;
+    border-radius: 20px;
+    padding: 15px;
+}
+
+.resume {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: #000000;
+    font-size: 30px;
+    border-radius: 20px;
+    padding: 15px;
+    display: flex;
+    
+}
+
+.projects {
+    border: none;
+    
+    outline: none;
+    cursor: pointer;
+    color: #000000;
+    font-size: 30px;
+    border-radius: 20px;
+    padding: 15px;
+}
+
+.contact {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: #000000;
+    font-size: 30px;
+    border-radius: 20px;
+    padding: 15px;
+}
+
+button {
+    outline: none;
+    border: none;
+    background: none;
+}
+
+.medialinks {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  align-items: center; /* vertically centers icons */
+}
+
+.github img {
+  width: 40px;
+  height: auto;
+  cursor: pointer;
+  display: block;
+  margin: 0;
+  vertical-align: middle;
+}
+
+.linkedin img {
+  width: 60px;
+  height: auto;
+  cursor: pointer;
+  display: block;
+  margin: 0;
+  vertical-align: middle;
+}
+
+
+
+
+.textbox {
+    padding: 30px;
+    margin-top: 20px;
+}
+
+.resume-photo {
+    display: block;
+    margin: 0 auto;
+    width: 85%; /* or use max-width instead */
+    height: auto;
+    margin-top: 100px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 40px; /* space between icon and text */
+  margin-bottom: 60px; /* spacing between rows */
+  font-size: 50px;
+  margin-top: 100px;
+}
+
+.icon {
+  width: 150px;  /* adjust size as needed */
+  height: 150px;
+}
+
+#projects {
+    font-size: 25px;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 40px; /* adjust the value as needed */
+  padding: 2rem; /* if you want some padding too */
+}
+
+.project-item {
+  margin-bottom: 2rem;
+}
+
+.project-item h3 {
+  margin-bottom: 0.5rem;
+  margin-top: 40px;
+}
+
+.project-item p {
+  font-size: 1.5rem;
+  line-height: 1.5;
+
+}
