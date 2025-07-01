@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
+        <title>Logan Matthews</title>
+    </head>
+    <body>
+        <div class="background">
+            <div class="tabs">
+                <button class="tab-button active" onclick="showTab('about')">About</button>
+                <button class="tab-button" onclick="showTab('resume')">Resume</button>
+                <button class="tab-button" onclick="showTab('projects')">Projects</button>
+                <button class="tab-button" onclick="showTab('contact')">Contact</button>
+            </div>
+
+            <div id="about" class="tab-content">
+                <div class="title" style="text-align: left;">Logan Matthews</div>
+                <div class="aboutme">
+                    <img src="images/IMG_2533.jpg" class="main-photo">
+                    <div class="textbox">
+                        <p>Hi, I’m Logan Matthews — a driven computer science student and varsity football player at the Colorado School of Mines. 
+                        I’m passionate about systems, performance optimization, and solving meaningful problems with code. With experience in Python, 
+                        C++, Assembly, and hardware fundamentals, I enjoy blending low-level understanding with high-level application. Whether I’m 
+                        analyzing football data using machine learning or designing sustainable engineering solutions, I bring a team-first mindset 
+                        shaped by years of leadership as a 4-year high school football captain. I’m currently seeking opportunities to grow in software 
+                        and systems engineering, and I’m always eager to learn, build, and lead.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resume" class="tab-content" style="display: none;">
+                <img src="images/Resume.jpg" class="resume-photo" />
+            </div>
+            <div id="projects" class="tab-content" style="display: none;">
+
+                <div class="project-item">
+                    <h3>Personal Resume Website</h3>
+                    <p>A sleek, responsive personal website built with HTML, CSS, and JavaScript to showcase my resume, projects, and contact information. This site demonstrates clean design, tabbed navigation, and interactive elements for an engaging user experience.</p>
+                </div>
+            
+                <div class="project-item">
+                    <h3>Blackjack Game</h3>
+                    <p>A fully interactive Blackjack game built from scratch using HTML, CSS, and JavaScript. This project showcases my ability to create dynamic, user-friendly web applications with game logic, card animations, and responsive design.</p>
+                </div>
+            
+                <div class="project-item">
+                    <h3>Colorado School of Mines Football Statistical Analysis</h3>
+                    <p>A data-driven analysis project using Python to explore Colorado School of Mines football statistics. I leveraged machine learning techniques such as logistic regression, random forests, and gradient boosting classifiers to identify the most impactful factors affecting team performance.</p>
+                </div>
+            </div>
+
+            <div id="contact" class="tab-content" style="display: none;">
+                <div class="contact-item">
+                    <img src="images/phoneIcon.png" class="icon">
+                    <span>(360)269-4574</span>
+                </div>
+                <div class="contact-item">
+                    <img src="images/emailIcon.jpg" class="icon">
+                    <span>Loganmatthews@gmail.com</span>
+                </div>
+            </div>
+            <div class="medialinks">
+                <a href="https://github.com/Gearthinker3" target="_blank" rel="noopener noreferrer" class="github button">
+                    <img src="images/githubicon.png" alt="gitHub" class="media-links" />
+                </a>
+
+                <a href="https://www.linkedin.com/in/loganmatthews04" target="_blank" rel="noopener noreferrer" class="linkedin button">
+                    <img src="images/linkedin.jpg" alt="linkedIn" class="media-links" />
+                </a>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
