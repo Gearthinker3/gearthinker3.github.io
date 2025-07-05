@@ -105,26 +105,34 @@ function checkGameResult() {
 
         if (dealerTotal === 21 && playerTotal === 21) {
             resultMsg = "Push! It's a tie.";
+            finalResult ="tie";
         } else if (playerTotal === 21) {
             winCounter();
             resultMsg = "Player wins with Blackjack!";
+            finalResult ="win";
         } else if (dealerTotal === 21) {
             lossCounter();
             resultMsg = "Dealer wins with Blackjack.";
+            finalResult ="loss";
         } else if (playerTotal > 21) {
             lossCounter();
             resultMsg = "Player busts! Dealer wins.";
+            finalResult ="loss";
         } else if (dealerTotal > 21) {
             winCounter();
             resultMsg = "Dealer busts! Player wins.";
+            finalResult ="win";
         } else if (playerTotal > dealerTotal) {
             winCounter();
             resultMsg = "Player wins!";
+            finalResult ="win";
         } else if (dealerTotal > playerTotal) {
             lossCounter();
             resultMsg = "Dealer wins!";
+            finalResult ="loss";
         } else {
             resultMsg = "Push! It's a tie.";
+            finalResult ="tie";
         }
 
         // ✅ Set result text and show banner
