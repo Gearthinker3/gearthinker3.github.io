@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+    <body>
+        <!-- Dealer Hand Icon -->
+        <div class="dealerHandIcon">
+            <div class="dealerIcon">Dealer's Hand</div>
+        </div>
+
+        <!-- Dealer Cards -->
+        <div class="dealer">
+            <div class="hiddenCard"><img src="images/back.png" class="backIcon" alt="Hidden card"></div>    
+            <div class="dealerCard"></div>
+        </div>
+
+        <!-- Game Result Banner -->
+        <div class="resultBanner" id="result"></div>
+
+        <!-- Player Cards -->
+        <div class="player">
+            <div class="cardOne"></div>
+            <div class="cardTwo"></div>
+        </div>
+
+        <!-- Player Hand Icon -->
+        <div class="playerHandIcon">
+            <div class="playerIcon">Player's Hand</div>
+        </div>
+
+        <!-- Score Displays -->
+        <div class="counts">
+            <div class="dealerCount" id="dealerTotalDisplay">Dealer Total: 0</div>
+            <div class="playerCount" id="playerTotalDisplay">Player Total: 0</div>
+        </div>
+
+        <!-- Player Actions -->
+        <div class="playerChoices">
+            <button class="deal" onclick="dealCards()"><b>Deal</b></button>
+            <button class="hit" onclick="addCard()"><b>Hit</b></button>
+            <button class="stand" onclick="standDraw()"><b>Stand</b></button>
+            <!-- <button class="doubleDown" onclick="addCard(); checkGameResult();"><b>Double Down (2)</b></button> -->
+        </div>
+
+        <!-- Win/Loss Counters -->
+        <div class="winLoss">
+            <div class="winCount" id="winTotalDisplay">Win Total: 0</div>
+            <div class="lossCount" id="lossTotalDisplay">Loss Total: 0</div>
+        </div>
+
+        <script src="script.js"></script>
+    </body>
+</html>
