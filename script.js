@@ -386,7 +386,7 @@ document.addEventListener("keydown", (event) => {
 });
 
 function sendGameLog(playerTotal, dealerTotal, result) {
-  fetch('https://your-render-url.onrender.com/log', {
+  fetch('https://blackjack-logger.onrender.com/log', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
