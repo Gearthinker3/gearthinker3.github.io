@@ -132,7 +132,6 @@ function checkGameResult() {
         resultBanner.innerText = resultMsg;
         resultBanner.style.display = "flex";
 
-        sendGameLog(playerTotal, dealerTotal, finalResult);
         reset();
         gameInProgress = false;
         cardsDealt = false;
@@ -328,6 +327,7 @@ function lossCounter() {
 }
 
 function reset() {
+    sendGameLog(playerTotal, dealerTotal, finalResult);
     setTimeout(() => {
         gameDeck.buildDeck();
         gameDeck.shuffle();
