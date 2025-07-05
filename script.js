@@ -140,7 +140,8 @@ function checkGameResult() {
         resultBanner.innerText = resultMsg;
         resultBanner.style.display = "flex";
 
-
+        sendGameLog(playerTotal, dealerTotal, finalResult)
+        
         reset();
         gameInProgress = false;
         cardsDealt = false;
@@ -384,4 +385,19 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
+function sendGameLog(playerTotal, dealerTotal, result) {
+  fetch('https://your-render-url.onrender.com/log', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      session_id: sessionId,  // generate once per browser session, e.g., crypto.randomUUID()
+      player_total: playerTotal,
+      dealer_total: dealerTotal,
+      result: result // e.g., "win", "lose", "push"
+    }),
+  })
+  .then(res => res.json())
+  .then(data => console.log(data.message))
+  .catch(err => console.error('Error logging game:', err));
+}
 
