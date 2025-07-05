@@ -138,11 +138,11 @@ function checkGameResult() {
         currentLog.timestamp = new Date().toISOString();
 
         // Send log to server
-        fetch('http://localhost:5000/log', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(currentLog)
-        })
+        fetch('https://blackjack-logger.onrender.com/log', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(logData)
+})
         .then(response => response.json())
         .then(data => {
             console.log('Game log saved:', data);
