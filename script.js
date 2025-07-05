@@ -140,7 +140,6 @@ function checkGameResult() {
         resultBanner.innerText = resultMsg;
         resultBanner.style.display = "flex";
 
-        sendGameLog(playerTotal, dealerTotal, finalResult);
 
         reset();
         gameInProgress = false;
@@ -386,21 +385,3 @@ document.addEventListener("keydown", (event) => {
 });
 
 
-function sendGameLog(playerTotal, dealerTotal, result) {
-    fetch('https://blackjack-logger.onrender.com/log', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            session_id: sessionId, // UUID, set in JS
-            player_total: playerTotal,
-            dealer_total: dealerTotal,
-            result: result, // "win", "loss", "draw"
-            timestamp: new Date().toISOString()
-        }),
-    })
-    .then(res => res.json())
-    .then(data => console.log("Logged:", data))
-    .catch(err => console.error("Log failed:", err));
-}
