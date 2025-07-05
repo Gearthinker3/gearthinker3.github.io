@@ -132,12 +132,11 @@ function checkGameResult() {
         resultBanner.innerText = resultMsg;
         resultBanner.style.display = "flex";
 
-        
+        sendGameLog(playerTotal, dealerTotal, finalResult);
         reset();
         gameInProgress = false;
         cardsDealt = false;
     }, 1000);
-    sendGameLog()
 }
 
 function dealCards() {
