@@ -388,7 +388,7 @@ function sendGameLog(log) {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": "supersecretkey"  // Replace with your actual secret
+            "Authorization": "supersecretkey"
         },
         body: JSON.stringify(log)
     })
@@ -403,3 +403,4 @@ function sendGameLog(log) {
         console.error("Error sending game log:", error);
     });
 }
+
