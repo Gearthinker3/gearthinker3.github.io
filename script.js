@@ -282,7 +282,7 @@ function standDraw() {
     if (!cardsDealt || !gameInProgress) return;
     currentLog.actions.push('stand');
     dealerTotal = calculateHandTotal(dealerHand);
-
+    revealHiddenCard();
     function drawNextCard() {
         
         if (dealerTotal < 17) {
