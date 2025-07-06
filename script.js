@@ -8,6 +8,9 @@ let winTotal = 0;
 let lossTotal = 0;
 let gameInProgress = false; // prevents new deal mid-hand
 let cardsDealt = false;     // prevents hit before deal
+let standPressed = false;
+let initialCheckDone = false;
+
 
 let sessionId = crypto.randomUUID(); // Unique session ID
 let handId = 0;
@@ -72,7 +75,7 @@ const gameDeck = new Deck();
 gameDeck.shuffle();
 
 function addCard() {
-    if (!cardsDealt || !gameInProgress) return;
+    if (!cardsDealt || !gameInProgress || standPressed) return;
 
     const cardName = gameDeck.draw();
     playerHand.push(cardName);
@@ -99,28 +102,37 @@ function checkGameResult() {
     revealHiddenCard();
 
     setTimeout(() => {
+        dealerTotal = calculateHandTotal(dealerHand);
         document.getElementById("dealerTotalDisplay").innerText = `Dealer Total: ${dealerTotal}`;
 
         let resultMsg = "";
+        let finalResult = "";
 
-        if (dealerTotal === 21 && playerTotal === 21) {
-            resultMsg = "Push! It's a tie.";
+        // Check for natural Blackjacks only if player hasn't acted yet
+        const playerBlackjack = playerTotal === 21 && playerHand.length === 2;
+        const dealerBlackjack = dealerTotal === 21 && dealerHand.length === 2;
+
+        if (playerBlackjack && dealerBlackjack) {
+            resultMsg = "Push! Both have Blackjack.";
             finalResult = "tie";
-        } else if (playerTotal === 21) {
+        } else if (playerBlackjack) {
             winCounter();
             resultMsg = "Player wins with Blackjack!";
             finalResult = "win";
-        } else if (dealerTotal === 21) {
+        } else if (dealerBlackjack) {
             lossCounter();
             resultMsg = "Dealer wins with Blackjack.";
             finalResult = "loss";
+        } else if (!standPressed && playerHand.length === 2 && dealerHand.length === 2) {
+            // No blackjacks, and no actions yet — exit early
+            return;
         } else if (playerTotal > 21) {
             lossCounter();
-            resultMsg = "Player busts! Dealer wins.";
+            resultMsg = "Player busts. Dealer wins.";
             finalResult = "loss";
         } else if (dealerTotal > 21) {
             winCounter();
-            resultMsg = "Dealer busts! Player wins.";
+            resultMsg = "Dealer busts! Player wins!";
             finalResult = "win";
         } else if (playerTotal > dealerTotal) {
             winCounter();
@@ -128,14 +140,14 @@ function checkGameResult() {
             finalResult = "win";
         } else if (dealerTotal > playerTotal) {
             lossCounter();
-            resultMsg = "Dealer wins!";
+            resultMsg = "Dealer wins.";
             finalResult = "loss";
         } else {
             resultMsg = "Push! It's a tie.";
             finalResult = "tie";
         }
 
-        // ✅ Set result text and show banner
+        // ✅ Display result
         const resultBanner = document.querySelector(".resultBanner");
         resultBanner.innerText = resultMsg;
         resultBanner.style.display = "flex";
@@ -144,15 +156,20 @@ function checkGameResult() {
         currentLog.timestamp = new Date().toISOString();
         gameLogs.push({ ...currentLog });
 
-        // ✅ Send to Render backend
-        sendGameLog(playerTotal, dealerTotal, finalResult)
+        // ✅ Send log to server
+        sendGameLog(playerTotal, dealerTotal, finalResult);
+
+        // ✅ Reset for next round
         reset();
         gameInProgress = false;
         cardsDealt = false;
     }, 1000);
 }
 
+
 function dealCards() {
+    standPressed = false
+    initialCheckDone = false;
     handId++;
     currentLog = {
         sessionId,
@@ -238,8 +255,10 @@ function dealCards() {
     document.getElementById("playerTotalDisplay").innerText = `Player Total: ${playerTotal}`;
     document.getElementById("dealerTotalDisplay").innerText = `Dealer Total: ?`;
 
-    if (dealerTotal === 21 || playerTotal === 21) {
-        checkGameResult();
+    if (playerTotal === 21 && playerHand.length === 2) {
+    checkGameResult();
+    } else if (dealerTotal === 21 && dealerHand.length === 2) {
+    checkGameResult();
     }
 }
 
@@ -279,12 +298,15 @@ function revealHiddenCard() {
 }
 
 function standDraw() {
-    if (!cardsDealt || !gameInProgress) return;
+    if (!cardsDealt || !gameInProgress || standPressed) return;
+    standPressed = true;
+
+    
     currentLog.actions.push('stand');
     dealerTotal = calculateHandTotal(dealerHand);
     revealHiddenCard();
+
     function drawNextCard() {
-        
         if (dealerTotal < 17) {
             const cardName = gameDeck.draw();
             dealerHand.push(cardName);
@@ -311,6 +333,7 @@ function standDraw() {
 
     setTimeout(drawNextCard, 2000);
 }
+
 
 function calculateHandTotal(hand) {
     let total = 0;
@@ -370,6 +393,7 @@ function reset() {
         document.getElementById("result").innerText = ``;
 
         // ✅ Allow new deal again
+        standPressed = false;
         gameInProgress = false;
         cardsDealt = false;
         dealButton.disabled = false;
@@ -377,17 +401,17 @@ function reset() {
     }, 3000);
 }
 
-document.addEventListener("keydown", (event) => {
-    const key = event.key.toLowerCase();
+// document.addEventListener("keydown", (event) => {
+//     const key = event.key.toLowerCase();
 
-    if (key === "d") {
-        showCardsAndDeal();
-    } else if (key === "h") {
-        addCard();
-    } else if (key === "s") {
-        standDraw();
-    }
-});
+//     if (key === "d") {
+//         showCardsAndDeal();
+//     } else if (key === "h") {
+//         addCard();
+//     } else if (key === "s") {
+//         standDraw();
+//     }
+// });
 
 
 function sendGameLog(log) {
