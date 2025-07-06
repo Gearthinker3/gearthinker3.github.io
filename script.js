@@ -255,10 +255,8 @@ function dealCards() {
     document.getElementById("playerTotalDisplay").innerText = `Player Total: ${playerTotal}`;
     document.getElementById("dealerTotalDisplay").innerText = `Dealer Total: ?`;
 
-    if (playerTotal === 21 && playerHand.length === 2) {
-    checkGameResult();
-    } else if (dealerTotal === 21 && dealerHand.length === 2) {
-    checkGameResult();
+    if ((playerTotal === 21 || dealerTotal === 21) && playerHand.length === 2 && dealerHand.length === 2) {
+    checkGameResult(); // Let checkGameResult() handle the reveal logic
     }
 }
 
@@ -283,6 +281,7 @@ function showCardsAndDeal() {
 dealButton.addEventListener("click", showCardsAndDeal);
 
 function revealHiddenCard() {
+     if (!hiddenCardName) return; // no hidden card, skip
     setTimeout(() => {
         document.getElementById("dealerTotalDisplay").innerText = `Dealer Total: ${dealerTotal}`;
         const hiddenCardDiv = document.querySelector(".hiddenCard");
@@ -307,29 +306,34 @@ function standDraw() {
     revealHiddenCard();
 
     function drawNextCard() {
-        if (dealerTotal < 17) {
-            const cardName = gameDeck.draw();
-            dealerHand.push(cardName);
+    dealerTotal = calculateHandTotal(dealerHand);
 
-            dealerTotal = calculateHandTotal(dealerHand);
+    const isSoft17 = dealerTotal === 17 && dealerHand.some(card => card.startsWith('ace'));
 
-            const newCard = document.createElement("div");
-            newCard.classList.add("deltDealerCard");
+    if (dealerTotal < 17 || isSoft17) {
+        const cardName = gameDeck.draw();
+        dealerHand.push(cardName);
 
-            const cardImg = document.createElement("img");
-            cardImg.src = `images/${cardName}.png`;
-            cardImg.classList.add("cardImage");
+        dealerTotal = calculateHandTotal(dealerHand);
 
-            newCard.appendChild(cardImg);
-            document.querySelector(".dealer").appendChild(newCard);
+        const newCard = document.createElement("div");
+        newCard.classList.add("deltDealerCard");
 
-            document.getElementById("dealerTotalDisplay").innerText = `Dealer Total: ${dealerTotal}`;
+        const cardImg = document.createElement("img");
+        cardImg.src = `images/${cardName}.png`;
+        cardImg.classList.add("cardImage");
 
-            setTimeout(drawNextCard, 1000);
-        } else {
-            checkGameResult();
-        }
+        newCard.appendChild(cardImg);
+        document.querySelector(".dealer").appendChild(newCard);
+
+        document.getElementById("dealerTotalDisplay").innerText = `Dealer Total: ${dealerTotal}`;
+
+        setTimeout(drawNextCard, 1000);
+    } else {
+        checkGameResult();
     }
+}
+
 
     setTimeout(drawNextCard, 2000);
 }
@@ -364,6 +368,7 @@ function lossCounter() {
 }
 
 function reset() {
+    dealButton.disabled = true; // block interaction immediately
     setTimeout(() => {
         gameDeck.buildDeck();
         gameDeck.shuffle();
