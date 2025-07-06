@@ -105,26 +105,34 @@ function checkGameResult() {
 
         if (dealerTotal === 21 && playerTotal === 21) {
             resultMsg = "Push! It's a tie.";
+            finalResult = "tie";
         } else if (playerTotal === 21) {
             winCounter();
             resultMsg = "Player wins with Blackjack!";
+            finalResult = "win";
         } else if (dealerTotal === 21) {
             lossCounter();
             resultMsg = "Dealer wins with Blackjack.";
+            finalResult = "loss";
         } else if (playerTotal > 21) {
             lossCounter();
             resultMsg = "Player busts! Dealer wins.";
+            finalResult = "loss";
         } else if (dealerTotal > 21) {
             winCounter();
             resultMsg = "Dealer busts! Player wins.";
+            finalResult = "win";
         } else if (playerTotal > dealerTotal) {
             winCounter();
             resultMsg = "Player wins!";
+            finalResult = "win";
         } else if (dealerTotal > playerTotal) {
             lossCounter();
             resultMsg = "Dealer wins!";
+            finalResult = "loss";
         } else {
             resultMsg = "Push! It's a tie.";
+            finalResult = "tie";
         }
 
         // ✅ Set result text and show banner
@@ -135,10 +143,9 @@ function checkGameResult() {
         currentLog.result = resultMsg;
         currentLog.timestamp = new Date().toISOString();
         gameLogs.push({ ...currentLog });
-            
-        // ✅ Send to Render backend
-        sendGameLog(currentLog);
 
+        // ✅ Send to Render backend
+        sendGameLog(playerTotal, dealerTotal, finalResult)
         reset();
         gameInProgress = false;
         cardsDealt = false;
@@ -388,7 +395,7 @@ function sendGameLog(log) {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": "supersecretkey"
+            "Authorization": "supersecretkey"  // Replace with your actual secret
         },
         body: JSON.stringify(log)
     })
@@ -404,3 +411,21 @@ function sendGameLog(log) {
     });
 }
 
+function sendGameLog(playerTotal, dealerTotal, result) {
+    fetch('https://blackjack-logger.onrender.com/log', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            session_id: sessionId, // UUID, set in JS
+            player_total: playerTotal,
+            dealer_total: dealerTotal,
+            result: result, // "win", "loss", "draw"
+            timestamp: new Date().toISOString()
+        }),
+    })
+    .then(res => res.json())
+    .then(data => console.log("Logged:", data))
+    .catch(err => console.error("Log failed:", err));
+}
